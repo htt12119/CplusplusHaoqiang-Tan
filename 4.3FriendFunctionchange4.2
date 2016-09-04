@@ -1,0 +1,38 @@
+#include <iostream.h>
+/*例4.3 将运算符加号重载为适用于复数加法，重载函数不作为成员函数，而放在类外，作为Complex类的友元函数
+*/
+
+class Complex
+{
+public:
+    Complex(){real = 0;imag = 0;}
+    Complex(double r,double i){real = r;image = i;}
+    friend Complex operator + (Complex &c1,Complex &c2);//重载函数作为友元函数
+    void display();
+private:
+    double real;
+    doubel imag;
+};
+
+Complex operator + (Complex &c1,Complex &c2)    //定义运算符“+”重载函数
+{
+    return Complex(c1.real + c2.real,c1.imag + c2.imag);
+}
+
+void Complex::display()
+{
+    cout<<"("<<real<<","<<imag<<"i)"<<endl;
+}
+int main()
+{
+    Complex c1(3,4),c2(5,-10),c3;
+    c3 = c1 + c2;
+    cout<<"c1 = ";
+    c1.display();
+    cout<<"c2 = ";
+    c2.display();
+    cout<<"c1 + c2 = ";
+    c3.display();
+    return 0;
+}
+//无法编译，因为可能c++的标准里iostream不支持友元函数，改成iostream.h后我的也不行，为啥
